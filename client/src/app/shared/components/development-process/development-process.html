@@ -1,0 +1,36 @@
+<section class="development-process">
+  <div class="container">
+    <h2 class="section-title">How development through IK works</h2>
+
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+
+      <div class="timeline-steps">
+        <div class="top-steps">
+          @for (step of topSteps(); track step.id) {
+          <div class="step-card top-card">
+            <div class="step-number">#{{ step.id }}</div>
+            <h3 class="step-title">{{ step.title }}</h3>
+            <p class="step-description">{{ step.description }}</p>
+            <div class="step-connector top-connector"></div>
+          </div>
+          }
+        </div>
+        <div class="bottom-steps">
+          @for (step of bottomSteps(); track step.id) {
+          <div class="step-card bottom-card">
+            <div class="step-connector bottom-connector"></div>
+            <div class="step-number">#{{ step.id }}</div>
+            <h3 class="step-title">{{ step.title }}</h3>
+            <p class="step-description">{{ step.description }}</p>
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="trophy-container">
+        <div class="trophy-icon">🏆</div>
+      </div>
+    </div>
+  </div>
+</section>

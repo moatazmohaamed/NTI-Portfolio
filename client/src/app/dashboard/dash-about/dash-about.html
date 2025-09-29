@@ -1,0 +1,383 @@
+<div class="space-y-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">About Us</h1>
+            <p class="text-gray-600">Manage company information, values, and story</p>
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    @if (successMessage()) {
+    <div class="bg-green-50 p-4 rounded-md">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm font-medium text-green-800">{{ successMessage() }}</p>
+            </div>
+            <div class="ml-auto pl-3">
+                <button (click)="clearSuccessMessage()"
+                    class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+
+    @if (errorMessage()) {
+    <div class="bg-red-50 p-4 rounded-md">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm font-medium text-red-800">{{ errorMessage() }}</p>
+            </div>
+            <div class="ml-auto pl-3">
+                <button (click)="clearErrorMessage()"
+                    class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+    <div class="flex justify-center py-12">
+        <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
+        </svg>
+    </div>
+    }
+
+    <!-- About Form -->
+    @if (!isLoading()) {
+    <div class="bg-white rounded-lg shadow">
+        <!-- Tab Navigation -->
+        <div class="border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
+                <button (click)="setActiveTab('company')" [class.border-blue-500]="activeTab() === 'company'"
+                    [class.text-blue-600]="activeTab() === 'company'"
+                    [class.border-transparent]="activeTab() !== 'company'"
+                    [class.text-gray-500]="activeTab() !== 'company'"
+                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm hover:text-gray-700 hover:border-gray-300">
+                    Company Info
+                </button>
+                <button (click)="setActiveTab('statistics')" [class.border-blue-500]="activeTab() === 'statistics'"
+                    [class.text-blue-600]="activeTab() === 'statistics'"
+                    [class.border-transparent]="activeTab() !== 'statistics'"
+                    [class.text-gray-500]="activeTab() !== 'statistics'"
+                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm hover:text-gray-700 hover:border-gray-300">
+                    Statistics
+                </button>
+                <button (click)="setActiveTab('values')" [class.border-blue-500]="activeTab() === 'values'"
+                    [class.text-blue-600]="activeTab() === 'values'"
+                    [class.border-transparent]="activeTab() !== 'values'"
+                    [class.text-gray-500]="activeTab() !== 'values'"
+                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm hover:text-gray-700 hover:border-gray-300">
+                    Core Values
+                </button>
+                <button (click)="setActiveTab('technologies')" [class.border-blue-500]="activeTab() === 'technologies'"
+                    [class.text-blue-600]="activeTab() === 'technologies'"
+                    [class.border-transparent]="activeTab() !== 'technologies'"
+                    [class.text-gray-500]="activeTab() !== 'technologies'"
+                    class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm hover:text-gray-700 hover:border-gray-300">
+                    Technologies
+                </button>
+            </nav>
+        </div>
+
+        <form [formGroup]="aboutForm" (ngSubmit)="onSubmit()" class="p-6">
+            <!-- Company Info Tab -->
+            @if (activeTab() === 'company') {
+            <div formGroupName="companyInfo" class="space-y-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Company Information</h3>
+
+                <!-- Founded Year -->
+                <div>
+                    <label for="foundedYear" class="block text-sm font-medium text-gray-700">
+                        Founded Year <span class="text-red-500">*</span>
+                    </label>
+                    <input id="foundedYear" type="text" formControlName="foundedYear" placeholder="e.g., 2020"
+                        class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500"
+                        [ngClass]="{'border-red-500': aboutForm.get('companyInfo.foundedYear')?.invalid && aboutForm.get('companyInfo.foundedYear')?.touched}" />
+                    @if (aboutForm.get('companyInfo.foundedYear')?.invalid &&
+                    aboutForm.get('companyInfo.foundedYear')?.touched) {
+                    <div class="mt-1 text-xs text-red-500">Founded year is required</div>
+                    }
+                </div>
+
+                <!-- Mission -->
+                <div>
+                    <label for="mission" class="block text-sm font-medium text-gray-700">
+                        Mission <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="mission" rows="4" formControlName="mission"
+                        placeholder="Describe your company's mission..."
+                        class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical"
+                        [ngClass]="{'border-red-500': aboutForm.get('companyInfo.mission')?.invalid && aboutForm.get('companyInfo.mission')?.touched}"></textarea>
+                    @if (aboutForm.get('companyInfo.mission')?.invalid && aboutForm.get('companyInfo.mission')?.touched)
+                    {
+                    <div class="mt-1 text-xs text-red-500">Mission is required</div>
+                    }
+                </div>
+
+                <!-- Vision -->
+                <div>
+                    <label for="vision" class="block text-sm font-medium text-gray-700">
+                        Vision <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="vision" rows="4" formControlName="vision"
+                        placeholder="Describe your company's vision..."
+                        class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical"
+                        [ngClass]="{'border-red-500': aboutForm.get('companyInfo.vision')?.invalid && aboutForm.get('companyInfo.vision')?.touched}"></textarea>
+                    @if (aboutForm.get('companyInfo.vision')?.invalid && aboutForm.get('companyInfo.vision')?.touched) {
+                    <div class="mt-1 text-xs text-red-500">Vision is required</div>
+                    }
+                </div>
+
+                <!-- Story -->
+                <div formGroupName="story">
+                    <h4 class="text-md font-medium text-gray-900 mb-4">Company Story</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="part1" class="block text-sm font-medium text-gray-700">
+                                Story Part 1 <span class="text-red-500">*</span>
+                            </label>
+                            <textarea id="part1" rows="3" formControlName="part1"
+                                placeholder="Beginning of your story..."
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical"
+                                [ngClass]="{'border-red-500': aboutForm.get('companyInfo.story.part1')?.invalid && aboutForm.get('companyInfo.story.part1')?.touched}"></textarea>
+                            @if (aboutForm.get('companyInfo.story.part1')?.invalid &&
+                            aboutForm.get('companyInfo.story.part1')?.touched) {
+                            <div class="mt-1 text-xs text-red-500">Story part 1 is required</div>
+                            }
+                        </div>
+
+                        <div>
+                            <label for="part2" class="block text-sm font-medium text-gray-700">
+                                Story Part 2 <span class="text-red-500">*</span>
+                            </label>
+                            <textarea id="part2" rows="3" formControlName="part2" placeholder="Middle of your story..."
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical"
+                                [ngClass]="{'border-red-500': aboutForm.get('companyInfo.story.part2')?.invalid && aboutForm.get('companyInfo.story.part2')?.touched}"></textarea>
+                            @if (aboutForm.get('companyInfo.story.part2')?.invalid &&
+                            aboutForm.get('companyInfo.story.part2')?.touched) {
+                            <div class="mt-1 text-xs text-red-500">Story part 2 is required</div>
+                            }
+                        </div>
+
+                        <div>
+                            <label for="part3" class="block text-sm font-medium text-gray-700">
+                                Story Part 3 <span class="text-red-500">*</span>
+                            </label>
+                            <textarea id="part3" rows="3" formControlName="part3" placeholder="End of your story..."
+                                class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical"
+                                [ngClass]="{'border-red-500': aboutForm.get('companyInfo.story.part3')?.invalid && aboutForm.get('companyInfo.story.part3')?.touched}"></textarea>
+                            @if (aboutForm.get('companyInfo.story.part3')?.invalid &&
+                            aboutForm.get('companyInfo.story.part3')?.touched) {
+                            <div class="mt-1 text-xs text-red-500">Story part 3 is required</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+
+            <!-- Statistics Tab -->
+            @if (activeTab() === 'statistics') {
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-medium text-gray-900">Statistics</h3>
+                    <button type="button" (click)="addStatistic()"
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Add Statistic
+                    </button>
+                </div>
+
+                <div formArrayName="statistics" class="space-y-4">
+                    @for (stat of statisticsArray.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <h4 class="text-sm font-medium text-gray-900">Statistic {{ i + 1 }}</h4>
+                            @if (statisticsArray.length > 1) {
+                            <button type="button" (click)="removeStatistic(i)"
+                                class="text-red-600 hover:text-red-800 focus:outline-none">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                            }
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Value <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" formControlName="value" placeholder="e.g., 100+"
+                                    class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Label <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" formControlName="label" placeholder="e.g., Projects Completed"
+                                    class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+
+            <!-- Core Values Tab -->
+            @if (activeTab() === 'values') {
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-medium text-gray-900">Core Values</h3>
+                    <button type="button" (click)="addCoreValue()"
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Add Core Value
+                    </button>
+                </div>
+
+                <div formArrayName="coreValues" class="space-y-4">
+                    @for (value of coreValuesArray.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-start justify-between mb-4">
+                            <h4 class="text-sm font-medium text-gray-900">Core Value {{ i + 1 }}</h4>
+                            @if (coreValuesArray.length > 1) {
+                            <button type="button" (click)="removeCoreValue(i)"
+                                class="text-red-600 hover:text-red-800 focus:outline-none">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                            }
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Title <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" formControlName="title" placeholder="e.g., Innovation"
+                                    class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Icon <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" formControlName="icon" placeholder="e.g., lightbulb, heart, shield"
+                                    class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500" />
+                                <p class="mt-1 text-xs text-gray-500">Icon name (e.g., from Heroicons or Font Awesome)
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Description <span
+                                        class="text-red-500">*</span></label>
+                                <textarea formControlName="description" rows="3"
+                                    placeholder="Describe this core value..."
+                                    class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-vertical"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+
+            <!-- Technologies Tab -->
+            @if (activeTab() === 'technologies') {
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-medium text-gray-900">Technologies</h3>
+                    <button type="button" (click)="addTechnology()"
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Add Technology
+                    </button>
+                </div>
+
+                <div formArrayName="technologies" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @for (tech of technologiesArray.controls; track $index; let i = $index) {
+                    <div [formGroupName]="i" class="p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-start justify-between mb-2">
+                            <label class="block text-sm font-medium text-gray-700">Technology {{ i + 1 }} <span
+                                    class="text-red-500">*</span></label>
+                            @if (technologiesArray.length > 1) {
+                            <button type="button" (click)="removeTechnology(i)"
+                                class="text-red-600 hover:text-red-800 focus:outline-none">
+                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            }
+                        </div>
+                        <input type="text" formControlName="name" placeholder="e.g., React, Node.js, Python"
+                            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:border-blue-500 focus:ring-blue-500" />
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+
+            <!-- Submit Button -->
+            <div class="border-t border-gray-200 pt-6 mt-8">
+                <div class="flex justify-end">
+                    <button type="submit" [disabled]="isLoading()"
+                        class="flex items-center space-x-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                        @if (isLoading()) {
+                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        }
+                        <span>{{ isEditing() ? 'Update' : 'Save' }} About Information</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    }
+</div>

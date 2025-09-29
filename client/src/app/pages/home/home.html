@@ -1,0 +1,46 @@
+<section class="min-h-screen flex items-center justify-center pt-20 pb-16 px-6 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto w-full">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+          Great <span
+            class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">Product</span> is built
+          by great <span
+            class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">teams</span>
+        </h1>
+        <p class="text-xl text-gray-600 leading-relaxed max-w-lg">
+          We help build and manage a team of world-class developers to bring your vision to life
+        </p>
+        <div class="pt-4">
+          <app-button variant="secondary" size="large" routerLink="/contact">
+            Let's get started!
+          </app-button>
+        </div>
+      </div>
+
+      <!-- Right Image -->
+      <div class="relative lg:pl-8 hidden md:block">
+        <div class="relative w-full h-96 lg:h-[500px] flex items-center justify-center">
+          <img src="/Hero-Wrapper__image--center.png" alt="Team collaboration illustration"
+            class="max-w-full max-h-full object-contain" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Gradient Circle -->
+  <div
+    class="absolute -bottom-32 -right-32 w-96 h-96 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-full blur-3xl">
+  </div>
+  <div
+    class="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-full blur-3xl">
+  </div>
+</section>
+
+<app-animated-banner></app-animated-banner>
+
+<app-development-process></app-development-process>
+
+<app-testimonials></app-testimonials>
+
+<app-faq></app-faq>

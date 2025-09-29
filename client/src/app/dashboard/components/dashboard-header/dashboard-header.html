@@ -1,0 +1,71 @@
+<!-- Dashboard Header -->
+<header class="bg-white border-b border-gray-200 px-6 py-4">
+  <div class="flex items-center justify-between">
+    <!-- Left side: Mobile menu button and breadcrumbs -->
+    <div class="flex items-center gap-4">
+      <!-- Mobile menu button -->
+      <button class="lg:hidden p-2 rounded-md hover:bg-gray-100" (click)="toggleSidebar()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center space-x-2 text-sm">
+        <a routerLink="/dashboard" class="text-gray-500 hover:text-gray-700">Dashboard</a>
+        @if (currentSection) {
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+          <span class="text-gray-900 font-medium capitalize">{{ currentSection }}</span>
+        }
+      </nav>
+    </div>
+
+    <!-- Right side: Actions and user menu -->
+    <div class="flex items-center gap-4">
+      <!-- Quick actions -->
+      <div class="hidden md:flex items-center gap-2">
+        <button class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+          <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          Add New
+        </button>
+      </div>
+
+      <!-- Notifications -->
+      <button class="p-2 text-gray-400 hover:text-gray-600 relative">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM10.07 2.82l3.12 3.12M7.05 5.84l3.12 3.12M4.03 8.86l3.12 3.12M1.01 11.88l3.12 3.12"></path>
+        </svg>
+        <!-- Notification badge -->
+        <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white"></span>
+      </button>
+
+      <!-- User menu -->
+      <div class="relative">
+        <button class="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100" (click)="toggleUserMenu()">
+          <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+            <span class="text-white text-sm font-medium">A</span>
+          </div>
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+
+        <!-- User dropdown menu -->
+        @if (isUserMenuOpen) {
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+            <div class="py-1">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+              <div class="border-t border-gray-100"></div>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</header>

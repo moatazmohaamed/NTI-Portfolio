@@ -1,0 +1,88 @@
+/* Team Page Styles */
+
+.team-card {
+  @apply bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl;
+  min-height: 400px;
+}
+
+.team-card:hover {
+  @apply shadow-2xl;
+}
+
+.team-card img {
+  @apply transition-transform duration-300;
+}
+
+.team-card:hover img {
+  @apply scale-105;
+}
+
+.social-link {
+  @apply transition-all duration-300;
+}
+
+.social-link:hover {
+  @apply transform scale-110;
+}
+
+/* Custom animations for team cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.team-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.team-card:nth-child(1) { animation-delay: 0.1s; }
+.team-card:nth-child(2) { animation-delay: 0.2s; }
+.team-card:nth-child(3) { animation-delay: 0.3s; }
+.team-card:nth-child(4) { animation-delay: 0.4s; }
+.team-card:nth-child(5) { animation-delay: 0.5s; }
+.team-card:nth-child(6) { animation-delay: 0.6s; }
+.team-card:nth-child(7) { animation-delay: 0.7s; }
+.team-card:nth-child(8) { animation-delay: 0.8s; }
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .team-card {
+    @apply mx-2;
+  }
+}
+
+@media (min-width: 1280px) {
+  .team-card {
+    @apply max-w-sm;
+  }
+}
+
+/* Enhanced hover effects */
+.team-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.team-card:hover::before {
+  opacity: 1;
+}
+
+.team-card > * {
+  position: relative;
+  z-index: 2;
+}

@@ -1,0 +1,146 @@
+<section class="testimonials-section bg-white py-16 px-4 relative overflow-hidden">
+  <div class="max-w-8xl mx-auto">
+    <div class="text-center mb-12">
+      <div class="w-16 h-1 bg-purple-600 mx-auto mb-4"></div>
+      <h2 class="text-2xl md:text-3xl font-medium text-gray-700 mb-2">Why customers love</h2>
+      <h3 class="text-3xl md:text-4xl font-bold text-gray-800">working with us</h3>
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+    <div class="flex justify-center items-center py-16">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-600"></div>
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (hasError()) {
+    <div class="text-center py-8">
+      <div class="text-red-500 mb-4">
+        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+          </path>
+        </svg>
+        <p class="mt-2">{{ errorMessage() }}</p>
+      </div>
+      <button (click)="retryFetch()"
+        class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors">
+        Try Again
+      </button>
+    </div>
+    }
+
+    <!-- Content when data is loaded -->
+    @if (!isLoading() && !hasError() && currentTestimonial()) {
+    <div class="testimonial-carousel-container mb-12">
+      <div class="relative max-w-4xl mx-auto">
+        <button (click)="previousTestimonial()"
+          class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 w-12 h-12 bg-indigo-400 rounded-full flex items-center justify-center text-white hover:bg-indigo-700 transition-colors duration-200 z-10 shadow-lg cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+
+        <button (click)="nextTestimonial()"
+          class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 w-12 h-12 bg-indigo-400 rounded-full flex items-center justify-center text-white hover:bg-indigo-700 transition-colors duration-200 z-10 shadow-lg cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+
+        <div class="testimonial-content text-center px-12 py-8">
+          <div class="quote-marks flex justify-center items-start mb-6">
+            <span class="text-6xl md:text-8xl text-purple-600 font-serif leading-none">"</span>
+            <div class="testimonial-text max-w-3xl mx-auto">
+              <p class="text-lg md:text-xl text-gray-700 leading-relaxed italic">
+                {{ currentTestimonial()?.text }}
+              </p>
+            </div>
+            <span class="text-6xl md:text-8xl text-purple-600 font-serif leading-none">"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Customer Profiles -->
+    <div class="customer-profiles">
+      <div class="profiles-grid flex flex-wrap justify-center gap-4 md:gap-8">
+        @for (testimonial of testimonialsWithActiveState(); track testimonial.id; let i = $index) {
+        <div (click)="selectTestimonial(i)"
+          class="customer-profile cursor-pointer transition-all duration-300 flex flex-col items-center"
+          [class.active]="testimonial.isActive">
+
+          <div class="avatar-container mb-3">
+            @if (testimonial.photo) {
+            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-4 transition-all duration-300"
+              [class.border-purple-600]="testimonial.isActive" [class.border-gray-200]="!testimonial.isActive"
+              [class.shadow-lg]="testimonial.isActive" [class.shadow-md]="!testimonial.isActive">
+              <img [src]="getImgUrl(testimonial.photo)" alt="{{ testimonial.name }}" class="w-full h-full object-cover">
+            </div>
+            } @else {
+            <div
+              class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-xl md:text-2xl font-bold text-purple-600 border-4 transition-all duration-300"
+              [class.border-purple-600]="testimonial.isActive" [class.border-gray-200]="!testimonial.isActive"
+              [class.shadow-lg]="testimonial.isActive" [class.shadow-md]="!testimonial.isActive">
+              {{ getCustomerInitials(testimonial.name) }}
+            </div>
+            }
+          </div>
+
+          <div class="stars flex justify-center gap-1 mb-2">
+            @for (star of generateStars(testimonial.rating); track $index) {
+            <span class="text-yellow-400 text-sm md:text-base">★</span>
+            }
+          </div>
+
+          <div class="customer-name text-center">
+            <p class="text-sm md:text-base font-semibold transition-colors duration-300 whitespace-nowrap"
+              [class.text-purple-600]="testimonial.isActive" [class.text-gray-700]="!testimonial.isActive">
+              {{ testimonial.name }}
+            </p>
+            <p class="text-xs md:text-sm transition-colors duration-300 whitespace-nowrap"
+              [class.text-purple-600]="testimonial.isActive" [class.text-gray-500]="!testimonial.isActive">
+              {{ testimonial.company }}
+            </p>
+            <p class="text-xs md:text-sm transition-colors duration-300 whitespace-nowrap"
+              [class.text-purple-600]="testimonial.isActive" [class.text-gray-500]="!testimonial.isActive">
+              {{ testimonial.role }}
+            </p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    }
+
+    <!-- No Data State -->
+    @if (!isLoading() && !hasError() && !currentTestimonial()) {
+    <div class="text-center py-8">
+      <p class="text-gray-500">No testimonials available at the moment.</p>
+    </div>
+    }
+  </div>
+
+  <div class="absolute bottom-0 left-0 w-32 h-32 opacity-20">
+    <svg viewBox="0 0 100 100" class="w-full h-full text-purple-600">
+      <defs>
+        <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="1" fill="currentColor" stroke-dasharray="2,2" />
+        </pattern>
+      </defs>
+      <rect width="100" height="100" fill="url(#dots)" />
+    </svg>
+  </div>
+
+  <div class="absolute bottom-0 right-0 w-32 h-32 opacity-20">
+    <svg viewBox="0 0 100 100" class="w-full h-full text-purple-600">
+      <defs>
+        <pattern id="dots2" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="1" fill="currentColor" stroke-dasharray="2,2" />
+        </pattern>
+      </defs>
+      <rect width="100" height="100" fill="url(#dots2)" />
+    </svg>
+  </div>
+</section>

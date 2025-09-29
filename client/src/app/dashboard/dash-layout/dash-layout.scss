@@ -1,0 +1,28 @@
+// Dashboard layout styles
+.dashboard-layout {
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+// Main content area
+.dashboard-main {
+  transition: margin-left 0.3s ease-in-out;
+}
+
+// Responsive adjustments
+@media (max-width: 1023px) {
+  .dashboard-main {
+    margin-left: 0 !important;
+  }
+}
+
+// Content padding
+.dashboard-content {
+  padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 1rem;
+  }
+}

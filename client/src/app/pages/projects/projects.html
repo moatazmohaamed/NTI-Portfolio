@@ -1,0 +1,163 @@
+<section class="py-20 px-6 bg-gray-50 min-h-screen relative overflow-hidden">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center my-12 sm:mb-16">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Recent Work</h1>
+      <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+        Explore our portfolio of innovative projects and creative solutions
+      </p>
+    </div>
+
+    @if (loading()) {
+    <div class="flex justify-center items-center py-20">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+    </div>
+    }
+
+    @if (error()) {
+    <div class="text-center py-20">
+      <div class="text-red-600 text-lg mb-4">{{ error() }}</div>
+      <button (click)="loadData()"
+        class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+        Try Again
+      </button>
+    </div>
+    }
+
+    @if (!loading() && !error()) {
+    <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 category-nav ">
+      <button (click)="filterByCategory('all')"
+        [class]="selectedCategory() === 'all' ? 'active-nav cursor-pointer' : 'cursor-pointer px-4 sm:px-6 py-2 sm:py-3 bg-white text-gray-700 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:bg-gray-50 text-sm sm:text-base'">
+        All Projects
+      </button>
+
+      @for (category of categories(); track category._id) {
+      <button (click)="filterByCategory(category.slug)"
+        [class]="selectedCategory() === category.slug ? 'active-nav' : 'px-4 cursor-pointer sm:px-6 py-2 sm:py-3 bg-white text-gray-700 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:bg-gray-50 text-sm sm:text-base'">
+        {{ category.name }}
+      </button>
+      }
+    </div>
+
+    <div class="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+      @for (project of filteredProjects(); track project._id) {
+      <div
+        class="project-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+        <div class="overflow-hidden h-64 relative">
+          <img [src]="getProjectImageUrl(project.image)" [alt]="project.title"
+            class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+
+          @if (project.featured) {
+          <div
+            class="absolute top-4 right-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Featured
+          </div>
+          }
+
+          <div class="absolute top-4 left-4">
+            @if (project.status === 'Completed') {
+            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              Completed
+            </span>
+            } @else if (project.status === 'In Progress') {
+            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              In Progress
+            </span>
+            } @else if (project.status === 'Planned') {
+            <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              Planned
+            </span>
+            } @else {
+            <span class="bg-gray-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+              {{ project.status || '---' }}
+            </span>
+            }
+          </div>
+
+        </div>
+
+        <div class="p-6">
+          <div class="mb-3">
+            <span class="inline-block bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">
+              {{ project.category.name }}
+            </span>
+          </div>
+
+          <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+            {{ project.title }}
+          </h3>
+
+          <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+            {{ project.description }}
+          </p>
+
+          @if (project.technologies && project.technologies.length > 0) {
+          <div class="mb-4">
+            <div class="flex flex-wrap gap-2">
+              @for (tech of project.technologies.slice(0, 4); track tech) {
+              <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
+                {{ tech }}
+              </span>
+              }
+              @if (project.technologies.length > 4) {
+              <span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
+                +{{ project.technologies.length - 4 }} more
+              </span>
+              }
+            </div>
+          </div>
+          }
+
+          @if (project.client?.name) {
+          <div class="text-sm text-gray-500 mb-4">
+            <span class="font-medium">Client:</span> {{ project.client?.name }}
+            @if (project.client?.industry) {
+            <span class="block">
+              <span class="font-medium">Industry:</span> {{ project.client?.industry }}
+            </span>
+            }
+          </div>
+          }
+
+          @if (project.completionDate) {
+          <div class="text-sm text-gray-500">
+            <span class="font-medium">Completed:</span>
+            {{ project.completionDate | date:'MMM yyyy' }}
+          </div>
+          }
+
+          @if (project.link) {
+          <div class="mt-6 flex justify-center">
+            <a [href]="project.link" target="_blank" rel="noopener noreferrer"
+              class="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors duration-300 text-center">
+              View Project
+            </a>
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
+
+    @if (filteredProjects().length === 0) {
+    <div class="text-center py-20">
+      <div class="text-gray-500 text-lg mb-4">
+        No projects found in this category
+      </div>
+      <button (click)="filterByCategory('all')"
+        class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+        View All Projects
+      </button>
+    </div>
+    }
+
+    <!-- Here add the pagination and fix the limit where it has only 4 pages and when there is a project on 5 it doesnt apear event its alone in the cat -->
+    }
+  </div>
+
+  <div
+    class="absolute  -bottom-32 -right-32 w-96 h-96 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-full blur-3xl">
+  </div>
+  <div
+    class="absolute -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-full blur-3xl">
+  </div>
+</section>

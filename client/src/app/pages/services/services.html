@@ -1,0 +1,71 @@
+<!-- Services Section -->
+<section class="py-20 px-6 bg-gray-50  relative overflow-hidden">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center my-16">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Services we offer</h2>
+    </div>
+
+    <div class="relative overflow-hidden py-5">
+
+      <div class="md:w-100 flex transition-transform duration-500 ease-in-out"
+        [style.transform]="'translateX(-' + (currentSlide() * 100) + '%)'">
+        @for (service of services(); track service._id) {
+        <div class="w-full flex-shrink-0 px-4">
+          <div
+            class="bg-white p-8 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 h-full flex flex-col items-center text-center"
+            [class.border-4]="service.isActive" [class.border-indigo-500]="service.isActive"
+            [class.shadow-xl]="service.isActive">
+            <div
+              class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full mb-6 shadow-md">
+              <img class="w-10 h-10" [src]="getProjectImageUrl(service.icon)" alt="{{ service.title }} icon">
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ service.title }}</h3>
+            <p class="text-gray-600 leading-relaxed">{{ service.description }}</p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+
+    <div class="flex justify-center items-center mt-8 space-x-4 relative z-[5]">
+      <button
+        class="p-3 sm:p-2 cursor-pointer rounded-full bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 touch-manipulation"
+        (click)="previousSlide()" [disabled]="currentSlide() === 0" [class.opacity-50]="currentSlide() === 0"
+        [class.cursor-not-allowed]="currentSlide() === 0">
+        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <button
+        class="p-3 sm:p-2 cursor-pointer rounded-full bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 touch-manipulation"
+        (click)="nextSlide()" [disabled]="currentSlide() === services().length - 1"
+        [class.opacity-50]="currentSlide() === services().length - 1"
+        [class.cursor-not-allowed]="currentSlide() === services().length - 1">
+        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="flex justify-center items-center mt-8 space-x-3 relative z-[5]">
+      @for (service of services(); track service._id; let i = $index) {
+      <button class="pagination-dot touch-manipulation" [class.active]="currentSlide() === i" (click)="goToSlide(i)">
+      </button>
+      }
+    </div>
+
+    <div class="flex justify-center items-center mt-8 space-x-2">
+      <span class="text-indigo-600 font-bold text-lg">{{ (currentSlide() + 1).toString().padStart(2, '0') }}</span>
+      <div class="w-8 h-0.5 bg-indigo-600"></div>
+      <span class="text-gray-400 font-bold text-lg">{{ services().length.toString().padStart(2, '0') }}</span>
+    </div>
+  </div>
+
+  <div
+    class="absolute z-[1] -bottom-32 -right-32 w-96 h-96 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 rounded-full blur-3xl">
+  </div>
+  <div
+    class="absolute z-[1] -top-32 -left-32 w-96 h-96 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-full blur-3xl">
+  </div>
+</section>

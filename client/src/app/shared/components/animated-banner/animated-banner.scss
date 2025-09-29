@@ -1,0 +1,106 @@
+.animated-banner {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 2rem 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.banner-track {
+  display: flex;
+  animation: scroll 30s linear infinite;
+  width: calc(200% + 4rem);
+}
+
+.banner-content {
+  flex-shrink: 0;
+  margin-right: 2rem;
+}
+
+.company-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 140px;
+  height: 100px;
+  border: 1px solid #f1f5f9;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  img {
+    max-height: 80px;
+    max-width: 120px;
+    object-fit: contain;
+    filter: grayscale(0.2);
+    transition: filter 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      filter: grayscale(0);
+      transform: scale(1.05);
+    }
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animated-banner:hover .banner-track {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .animated-banner {
+    padding: 1.5rem 0;
+  }
+
+  .banner-content {
+    margin-right: 1rem;
+  }
+
+  .company-logo {
+    min-width: 120px;
+    height: 80px;
+    padding: 0.75rem;
+
+    img {
+      max-height: 60px;
+      max-width: 100px;
+    }
+  }
+
+  .banner-track {
+    animation-duration: 25s;
+  }
+}
+
+@media (max-width: 480px) {
+  .company-logo {
+    min-width: 100px;
+    height: 70px;
+    padding: 0.5rem;
+
+    img {
+      max-height: 50px;
+      max-width: 80px;
+    }
+  }
+
+  .banner-track {
+    animation-duration: 20s;
+  }
+}

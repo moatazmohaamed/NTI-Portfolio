@@ -1,0 +1,102 @@
+/* About Page Styles */
+
+.about-card {
+  @apply bg-white rounded-2xl shadow-lg p-8 md:p-10 transform transition-all duration-300 hover:shadow-xl;
+}
+
+.about-card:hover {
+  @apply shadow-2xl;
+}
+
+.value-card {
+  @apply bg-white rounded-2xl shadow-lg p-8 text-center transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+}
+
+.value-card:hover {
+  @apply shadow-2xl;
+}
+
+.tech-item {
+  @apply text-center group;
+}
+
+.tech-item:hover {
+  @apply transform scale-105;
+}
+
+.stats-card {
+  @apply text-center p-6 bg-gray-50 rounded-xl transition-all duration-300 hover:bg-indigo-50 hover:shadow-md;
+}
+
+.stats-card:hover {
+  @apply transform scale-105;
+}
+
+/* Custom animations for about page */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.value-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.value-card:nth-child(1) { animation-delay: 0.1s; }
+.value-card:nth-child(2) { animation-delay: 0.2s; }
+.value-card:nth-child(3) { animation-delay: 0.3s; }
+.value-card:nth-child(4) { animation-delay: 0.4s; }
+.value-card:nth-child(5) { animation-delay: 0.5s; }
+.value-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Enhanced hover effects */
+.about-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 1rem;
+}
+
+.about-card:hover::before {
+  opacity: 1;
+}
+
+.about-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .about-card {
+    @apply mx-2;
+  }
+
+  .value-card {
+    @apply mx-2;
+  }
+}
+
+@media (min-width: 1280px) {
+  .about-card {
+    @apply max-w-4xl;
+  }
+}

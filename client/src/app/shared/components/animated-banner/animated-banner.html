@@ -1,0 +1,11 @@
+<div class="animated-banner">
+  <div class="banner-track">
+    @for (company of duplicatedCompanies(); track company.logo) {
+    <div class="banner-content">
+      <div class="company-logo">
+        <img src="{{ company.logo }}" alt="Company logo" width="120" height="80" priority="false" />
+      </div>
+    </div>
+    }
+  </div>
+</div>
