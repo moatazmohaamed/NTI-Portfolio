@@ -7,7 +7,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class teamService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   private apiUrl = environment.apiUrl + '/team-members';
 
   getTeamMembers() {

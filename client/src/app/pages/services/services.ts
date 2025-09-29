@@ -16,14 +16,13 @@ export class ServicesComponent implements OnInit {
   services = signal<Data[]>([]);
 
   constructor(private servicesService: Services) {
-    // Don't call updateActiveService here as services array is empty initially
   }
 
   ngOnInit() {
     this.servicesService.getServices().subscribe({
       next: (res) => {
         this.services.set(res.data);
-        this.updateActiveService(); // Call this after services are loaded
+        this.updateActiveService();
         console.log(res.data);
       },
     });

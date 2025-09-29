@@ -6,7 +6,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class ContactService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   private apiUrl = environment.apiUrl + '/contact';
 
   sendContactForm(formData: FormData) {

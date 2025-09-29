@@ -54,7 +54,7 @@ export class TestimonialsComponent implements OnInit {
   readonly hasError = computed(() => this.error() !== null);
   readonly errorMessage = computed(() => this.error());
 
-  constructor(private testimonialsService: TestimonialsServices) {}
+  constructor(private testimonialsService: TestimonialsServices) { }
 
   ngOnInit(): void {
     this.fetchTestimonials();

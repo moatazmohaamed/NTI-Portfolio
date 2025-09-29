@@ -234,7 +234,6 @@ export class DashAbout implements OnInit {
     if (this.isEditing() && this.about()?._id) {
       this.dashService.updateAbout(this.about()!._id!, aboutData).subscribe({
         next: (response) => {
-          console.log('About updated successfully:', response);
           this.about.set(response);
           this.setSuccessMessage('About information updated successfully!');
           this.isLoading.set(false);

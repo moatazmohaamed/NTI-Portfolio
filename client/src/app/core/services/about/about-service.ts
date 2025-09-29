@@ -8,7 +8,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class AboutService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
   private apiUrl = environment.apiUrl + '/about-us';
   getAbout(): Observable<About> {
     return this._http.get<About>(this.apiUrl);

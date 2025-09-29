@@ -42,9 +42,6 @@ export class DashTestimonials implements OnInit {
     this.isLoading.set(true);
     this.dashService.getTestimonials().subscribe({
       next: (res: any) => {
-        console.log('Testimonials API response:', res);
-        // The dashboard service already maps response.data, so res should be the testimonials array
-        // But the controller returns nested structure, so handle both cases
         let testimonials = res;
         if (res.data && res.data.testimonials) {
           testimonials = res.data.testimonials;

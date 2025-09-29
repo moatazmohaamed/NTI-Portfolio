@@ -23,12 +23,12 @@ export interface Testimonial {
 export class TestimonialsServices {
   private apiUrl = `${environment.apiUrl}/testimonials`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTestimonials(): Observable<{ testimonials: Testimonial[] }> {
     return this.http
       .get<{ testimonials: Testimonial[] }>(this.apiUrl)
   }
 
-  
+
 }
