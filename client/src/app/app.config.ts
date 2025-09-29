@@ -16,7 +16,6 @@ import {
   provideHttpClient,
   withFetch,
   withInterceptors,
-  withInterceptorsFromDi,
 } from '@angular/common/http';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 

@@ -14,15 +14,17 @@ const faqRoute = require("./routes/faqRoute");
 
 
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-  })
+  cors()
 );
 
 
 app.use(express.json());
 app.use(morgan("dev"));
 app.use('/uploads', express.static('uploads'));
+
+app.use('/', (req,res)=>{
+  res.send("helllow")
+})
 
 // Routes
 app.use("/api/projects", projectsRoute);
