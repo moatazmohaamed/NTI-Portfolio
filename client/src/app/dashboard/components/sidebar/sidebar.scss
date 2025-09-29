@@ -1,9 +1,9 @@
 // Sidebar specific styles
-.sidebar-nav-item {
-  &.router-link-active {
-    @apply bg-blue-50 text-blue-700 border-r-2 border-blue-700;
-  }
-}
+// .sidebar-nav-item {
+//   &.router-link-active {
+//     @apply text-blue-700 border-r-2 border-blue-700;
+//   }
+// }
 
 // Smooth transitions for mobile sidebar
 @media (max-width: 1023px) {
