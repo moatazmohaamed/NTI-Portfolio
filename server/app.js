@@ -14,9 +14,7 @@ const faqRoute = require("./routes/faqRoute");
 
 
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-  })
+  cors()
 );
 
 
